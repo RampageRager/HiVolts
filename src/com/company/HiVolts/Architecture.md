@@ -20,7 +20,6 @@
             - get valid moves
             - get direction of next move
             - get result of move
-            - Mho count after each turn
         - Fence class
             - return if has fence
     - Aleksey
