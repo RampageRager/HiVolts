@@ -14,12 +14,15 @@ public class Mho {
 
     public Point getMhoCoordinates() {
         return mhoCoordinates;
+    }
     public Point getPlayerCoordinates() {
         return playerCoordinates;
-        }
     }
-    public void checkCoordinates() {
+    public boolean checkIntersecting() {
         if (playerCoordinates.getX() == mhoCoordinates.getX() && playerCoordinates.getY() == mhoCoordinates.getY()) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
