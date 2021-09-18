@@ -1,0 +1,33 @@
+- app (main)
+- cell
+    - can contain players/mhos/fences
+- Board
+    - 12x12 array of cells
+- Fence
+- Player
+- Mho
+- GUI
+
+
+- Roles
+    - Keerath
+        - Board class: 12x12 array of cells
+        - returns what is in the cell
+        - get array
+        - set array
+    - Linden
+        - Mho class
+            - get valid moves
+            - get direction of next move
+            - get result of move
+        - Fence class
+            - return if has fence
+    - Aleksey
+        - Cell class
+            - has Fence, player, Mho
+        - Player class
+            - check valid moves
+            - make valid move
+        - GUI
+            - displays everything
+            - gets input
