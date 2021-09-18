@@ -1,16 +1,14 @@
 package com.company.HiVolts;
 
+import java.awt.*;
+
 public class Mho {
-    private int validMoves;
-    private int moveResult;
-    public Mho(int validMoves, int moveResult){
-        this.validMoves = validMoves;
-        this.moveResult = moveResult;
+    private Point playerCoordinates;
+    private Point mhoCoordinates;
+    public void setPlayerCoordinates(int i, int j) {
+        playerCoordinates.setLocation(i, j);
     }
-    public int getValidMoves(){
-            return this.validMoves;
-    }
-    public int getMoveResult(){
-        return this.moveResult;
+    public void setMhoCoordinates(int x, int y) {
+        mhoCoordinates.setLocation(x, y);
     }
 }
