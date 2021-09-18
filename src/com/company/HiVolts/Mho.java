@@ -11,4 +11,15 @@ public class Mho {
     public void setMhoCoordinates(int x, int y) {
         mhoCoordinates.setLocation(x, y);
     }
+
+    public Point getMhoCoordinates() {
+        return mhoCoordinates;
+    public Point getPlayerCoordinates() {
+        return playerCoordinates;
+        }
+    }
+    public void checkCoordinates() {
+        if (playerCoordinates.getX() == mhoCoordinates.getX() && playerCoordinates.getY() == mhoCoordinates.getY()) {
+        }
+    }
 }
