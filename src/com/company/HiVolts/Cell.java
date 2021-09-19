@@ -32,8 +32,8 @@ public class Cell {
     }
 
     public void removePlayer() {
-        myMho = null;
-        hasMho = false;
+        myPlayer = null;
+        hasPlayer = false;
     }
 
     public boolean checkPlayer() {

@@ -7,6 +7,7 @@ public class Board {
     private Cell[][] board = new Cell[12][12];
     private Player myPlayer;
     private Point move;
+    private boolean gameOver = false;
 
     public Board() {
         Random rand = new Random();
@@ -124,7 +125,8 @@ public class Board {
 
         int px = (int) playerLoc.getX();
         int py = (int) playerLoc.getY();
-        board[px][py].setPlayer(new Player());
+        board[px][py].setPlayer(new Player(px, py));
+        myPlayer = new Player(px, py);
 
     }
 
@@ -165,10 +167,82 @@ public class Board {
             for (int j = 0; j < 12; j++) {
                 if (hasPlayer(i, j) == true) {
                     myPlayer = getPlayer(i, j);
+                    myPlayer.setPlayerCoords(i, j);
                 }
             }
         }
+    }
 
+    public void updatePlayer(Point move) {
+        Random rand = new Random();
+        if (myPlayer != null) {
+            if (move.getX() != 5) {
+                findPlayer();
+                myPlayer.setMove((int) move.getX(), (int) move.getY());
+                board[(int) myPlayer.getPlayerCoords().getX()][(int) myPlayer.getPlayerCoords().getY()].removePlayer();
+                myPlayer.updateLoc();
+                board[(int) myPlayer.getPlayerCoords().getX()][(int) myPlayer.getPlayerCoords().getY()].setPlayer(myPlayer);
+                if (board[(int) myPlayer.getPlayerCoords().getX()][(int) myPlayer.getPlayerCoords().getY()].checkFence() || board[(int) myPlayer.getPlayerCoords().getX()][(int) myPlayer.getPlayerCoords().getY()].checkMho()) {
+                    myPlayer = null;
+                    gameOver = true;
+                }
+            } else {
+                findPlayer();
+                board[(int) myPlayer.getPlayerCoords().getX()][(int) myPlayer.getPlayerCoords().getY()].removePlayer();
+                myPlayer.updateLoc();
+                board[rand.nextInt(12)][rand.nextInt(12)].setPlayer(myPlayer);
+                findPlayer();
+                if (board[(int) myPlayer.getPlayerCoords().getX()][(int) myPlayer.getPlayerCoords().getY()].checkFence() || board[(int) myPlayer.getPlayerCoords().getX()][(int) myPlayer.getPlayerCoords().getY()].checkMho()) {
+                    myPlayer = null;
+                    gameOver = true;
+                }
+            }
+        }
+    }
+
+    public void updateMhos() {
+        if (gameOver == false) {
+            Cell[][] newBoard = new Cell[12][12];
+            for (int i = 0; i < 12; i++) {
+                for (int j = 0; j < 12; j++) {
+                    newBoard[i][j] = new Cell();
+                    if (board[i][j].checkFence()) {
+                        newBoard[i][j].setFence(new Fence());
+                    }
+                    if (board[i][j].checkMho()) {
+                        newBoard[i][j].setMho(new Mho(new Point(i, j)));
+                    }
+                    if (board[i][j].checkPlayer()) {
+                        newBoard[i][j].setPlayer(new Player(i, j));
+                    }
+
+                }
+            }
+            for (int i = 0; i < 12; i++) {
+                for (int j = 0; j < 12; j++) {
+                    if (board[i][j].checkMho()) {
+                        Point mhoPos = board[i][j].returnMho().getNewMhoPos(myPlayer.getPlayerCoords(), new Point(i, j));
+                        if (!board[(int) mhoPos.getX()][(int) mhoPos.getY()].checkMho()) {
+                            if (!board[(int) mhoPos.getX()][(int) mhoPos.getY()].checkFence()) {
+                                //board[(int) mhoPos.getX()][(int) mhoPos.getY()].setMho(board[i][j].returnMho());
+                                newBoard[(int) mhoPos.getX()][(int) mhoPos.getY()].setMho(newBoard[i][j].returnMho());
+                            }
+                            newBoard[i][j].removeMho();
+
+                        }
+                    }
+                }
+            }
+            board = newBoard;
+            for (int i = 0; i < 12; i++) {
+                for (int j = 0; j < 12; j++) {
+                    if (board[i][j].checkPlayer() && board[i][j].checkMho()) {
+                        myPlayer = null;
+                        gameOver = true;
+                    }
+                }
+            }
+        }
     }
 
 }
