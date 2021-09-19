@@ -16,6 +16,7 @@ public class GUI extends JPanel implements ActionListener {
     Board myBoard = new Board();
     Cell[][] grid;
     Timer updateTimer = new Timer(1, this);
+    boolean hasImages = true;
     private BufferedImage smileImage;
     private BufferedImage sadImage;
     private BufferedImage fenceImage;
@@ -169,8 +170,11 @@ public class GUI extends JPanel implements ActionListener {
             AffineTransformOp scaleOp3 = new AffineTransformOp(at3, AffineTransformOp.TYPE_BILINEAR);
             fenceAfter = scaleOp3.filter(fenceImage, fenceAfter);
             fenceImage = fenceAfter;
+
+            hasImages = true;
         } catch (IOException ex) {
             System.out.println("problem occurred");
+            hasImages = false;
         }
 
 
@@ -217,28 +221,28 @@ public class GUI extends JPanel implements ActionListener {
         for (int i = 0; i < 12; i++) {
             for (int j = 0; j < 12; j++) {
                 if (myBoard.hasFence(i, j)) {
-                    /*
-                    g.setColor(Color.pink);
-                    g.fillRect(i*60, j*60, 60, 60);
-
-                     */
-                    g.drawImage(fenceImage,i*60, j*60, this);
+                    if (hasImages == false) {
+                        g.setColor(Color.pink);
+                        g.fillRect(i * 60, j * 60, 60, 60);
+                    } else {
+                        g.drawImage(fenceImage, i * 60, j * 60, this);
+                    }
                 }
                 if (myBoard.hasMho(i, j)) {
-                    /*
-                    g.setColor(Color.RED);
-                    g.fillRect(i*60, j*60, 60, 60);
-
-                     */
-                    g.drawImage(sadImage,i*60, j*60, this);
+                    if (hasImages == false) {
+                        g.setColor(Color.RED);
+                        g.fillRect(i * 60, j * 60, 60, 60);
+                    } else {
+                        g.drawImage(sadImage, i * 60, j * 60, this);
+                    }
                 }
                 if (myBoard.hasPlayer(i, j)) {
-                    /*
-                    g.setColor(Color.BLUE);
-                    g.fillRect(i*60+20, j*60+20, 20, 20);
-
-                     */
-                    g.drawImage(smileImage,i*60, j*60, this);
+                    if (hasImages == false) {
+                        g.setColor(Color.BLUE);
+                        g.fillRect(i * 60 + 20, j * 60 + 20, 20, 20);
+                    } else {
+                        g.drawImage(smileImage, i * 60, j * 60, this);
+                    }
                 }
 
                 g.setColor(Color.black);
