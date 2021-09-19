@@ -7,6 +7,24 @@ public class Board {
     private Player myPlayer;
     private Point move;
 
+    public Board() {
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 12; j++) {
+                if (i == 0 || i == 12) {
+                    board[i][j].setFence(new Fence());
+                } else if (j == 0 || j == 12) {
+                    board[i][j].setFence(new Fence());
+                } else {
+                    board[i][j].setMho(new Mho(new Point(i, j)));
+                }
+            }
+        }
+    }
+
+    public Cell[][] getBoard() {
+        return board;
+    }
+
     public void setMove(int x, int y){
         move.setLocation(x, y);
     }
