@@ -1,16 +1,34 @@
 package com.company.HiVolts;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.concurrent.TimeUnit;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class GUI extends JPanel implements ActionListener {
     Board myBoard = new Board();
     Cell[][] grid;
-    Timer updateTimer = new Timer(5000, this);
+    Timer updateTimer = new Timer(1, this);
+    private BufferedImage smileImage;
+    private BufferedImage sadImage;
+    private BufferedImage fenceImage;
+
+    private static final String RESTART = "restart";
+    private Action restart = new AbstractAction(RESTART) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            myBoard = new Board();
+            grid = myBoard.getBoard();
+            repaint();
+        }
+    };
 
     private static final String JUMP = "jump";
     private Action jump = new AbstractAction(JUMP) {
@@ -121,6 +139,41 @@ public class GUI extends JPanel implements ActionListener {
         grid = myBoard.getBoard();
         updateTimer.start();
 
+        try {
+            smileImage = ImageIO.read(new File("/Users/alekseyvalouev/IdeaProjects/HiVolts/src/com/company/HiVolts/smiley.png"));
+            int w = smileImage.getWidth();
+            int h = smileImage.getHeight();
+            BufferedImage smileAfter = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+            AffineTransform at = new AffineTransform();
+            at.scale(0.17, 0.17);
+            AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+            smileAfter = scaleOp.filter(smileImage, smileAfter);
+            smileImage = smileAfter;
+
+            sadImage = ImageIO.read(new File("/Users/alekseyvalouev/IdeaProjects/HiVolts/src/com/company/HiVolts/sad.png"));
+            w = sadImage.getWidth();
+            h = sadImage.getHeight();
+            BufferedImage sadAfter = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+            AffineTransform at2 = new AffineTransform();
+            at2.scale(0.07, 0.07);
+            AffineTransformOp scaleOp2 = new AffineTransformOp(at2, AffineTransformOp.TYPE_BILINEAR);
+            sadAfter = scaleOp2.filter(sadImage, sadAfter);
+            sadImage = sadAfter;
+
+            fenceImage = ImageIO.read(new File("/Users/alekseyvalouev/IdeaProjects/HiVolts/src/com/company/HiVolts/fence.png"));
+            w = fenceImage.getWidth();
+            h = fenceImage.getHeight();
+            BufferedImage fenceAfter = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+            AffineTransform at3 = new AffineTransform();
+            at3.scale(0.075, 0.075);
+            AffineTransformOp scaleOp3 = new AffineTransformOp(at3, AffineTransformOp.TYPE_BILINEAR);
+            fenceAfter = scaleOp3.filter(fenceImage, fenceAfter);
+            fenceImage = fenceAfter;
+        } catch (IOException ex) {
+            System.out.println("problem occurred");
+        }
+
+
         this.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_J, 0), JUMP);
         this.getActionMap().put(JUMP, jump);
 
@@ -151,6 +204,9 @@ public class GUI extends JPanel implements ActionListener {
         this.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_C, 0), DOWNRIGHT);
         this.getActionMap().put(DOWNRIGHT, downright);
 
+        this.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_R, 0), RESTART);
+        this.getActionMap().put(RESTART, restart);
+
     }
     public Dimension getPreferredSize() {
         return new Dimension(720, 720);
@@ -161,16 +217,28 @@ public class GUI extends JPanel implements ActionListener {
         for (int i = 0; i < 12; i++) {
             for (int j = 0; j < 12; j++) {
                 if (myBoard.hasFence(i, j)) {
+                    /*
                     g.setColor(Color.pink);
                     g.fillRect(i*60, j*60, 60, 60);
+
+                     */
+                    g.drawImage(fenceImage,i*60, j*60, this);
                 }
                 if (myBoard.hasMho(i, j)) {
+                    /*
                     g.setColor(Color.RED);
                     g.fillRect(i*60, j*60, 60, 60);
+
+                     */
+                    g.drawImage(sadImage,i*60, j*60, this);
                 }
                 if (myBoard.hasPlayer(i, j)) {
+                    /*
                     g.setColor(Color.BLUE);
                     g.fillRect(i*60+20, j*60+20, 20, 20);
+
+                     */
+                    g.drawImage(smileImage,i*60, j*60, this);
                 }
 
                 g.setColor(Color.black);
@@ -178,16 +246,33 @@ public class GUI extends JPanel implements ActionListener {
             }
         }
 
+
+        if (!myBoard.checkGameOver()) {
+            Font font = new Font("Serif", Font.PLAIN, 1);
+            g.setFont(font);
+            g.drawString("a", -10, -10);
+        } else {
+            Font font = new Font("Serif", Font.PLAIN, 96);
+            g.setFont(font);
+            //g.drawString("Text", 40, 120);
+            g.drawString("GAME OVER", 80, 360);
+        }
+
     }
 
 
     public void actionPerformed(ActionEvent ev) {
         if (ev.getSource() == updateTimer) {
+
             /*
-            myBoard.updateMhos();
-            repaint();
+            if (myBoard.checkGameOver()) {
+                repaint();
+            }
 
              */
+
+
+
         }
     }
 }

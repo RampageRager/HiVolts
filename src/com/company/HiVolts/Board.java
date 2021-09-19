@@ -173,6 +173,10 @@ public class Board {
         }
     }
 
+    public boolean checkGameOver() {
+        return gameOver;
+    }
+
     public void updatePlayer(Point move) {
         Random rand = new Random();
         if (myPlayer != null) {
