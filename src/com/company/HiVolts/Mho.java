@@ -17,12 +17,8 @@ public class Mho {
         mhoCoordinates.setLocation(x, y);
     }
 
-    public Point getMhoCoordinates() {
-        return mhoCoordinates;
-    }
-    public Point getPlayerCoordinates() {
-        return playerCoordinates;
-    }
+    public Point getMhoCoordinates() {return mhoCoordinates;}
+    public Point getPlayerCoordinates() {return playerCoordinates;}
 
     private Point getNewMhoMove() {
         Point move = new Point(0, 0);
