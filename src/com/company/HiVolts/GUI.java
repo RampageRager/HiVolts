@@ -262,18 +262,23 @@ public class GUI extends JPanel implements ActionListener {
             g.drawString("GAME OVER", 80, 360);
         }
 
+        if (myBoard.checkVictory()) {
+            Font font = new Font("Serif", Font.PLAIN, 96);
+            g.setFont(font);
+            g.drawString("YOU WIN", 120, 360);
+        } else {
+            Font font = new Font("Serif", Font.PLAIN, 1);
+            g.setFont(font);
+            g.drawString("a", -10, -10);
+        }
+
     }
 
 
     public void actionPerformed(ActionEvent ev) {
         if (ev.getSource() == updateTimer) {
 
-            /*
-            if (myBoard.checkGameOver()) {
-                repaint();
-            }
-
-             */
+            myBoard.update();
 
 
 

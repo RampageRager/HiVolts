@@ -8,6 +8,7 @@ public class Board {
     private Player myPlayer;
     private Point move;
     private boolean gameOver = false;
+    private boolean victory = false;
 
     public Board() {
         Random rand = new Random();
@@ -177,6 +178,25 @@ public class Board {
         return gameOver;
     }
 
+    public boolean checkVictory() {
+        return victory;
+    }
+
+    public void update() {
+        int mhoCount = 0;
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 12; j++) {
+                if (board[i][j].checkMho()) {
+                    mhoCount++;
+                }
+            }
+        }
+        if (mhoCount == 0) {
+            victory = true;
+            myPlayer = null;
+        }
+    }
+
     public void updatePlayer(Point move) {
         Random rand = new Random();
         if (myPlayer != null) {
@@ -206,6 +226,7 @@ public class Board {
 
     public void updateMhos() {
         if (gameOver == false) {
+            int mhoCount = 0;
             Cell[][] newBoard = new Cell[12][12];
             for (int i = 0; i < 12; i++) {
                 for (int j = 0; j < 12; j++) {
@@ -215,12 +236,17 @@ public class Board {
                     }
                     if (board[i][j].checkMho()) {
                         newBoard[i][j].setMho(new Mho(new Point(i, j)));
+                        mhoCount++;
                     }
                     if (board[i][j].checkPlayer()) {
                         newBoard[i][j].setPlayer(new Player(i, j));
                     }
 
                 }
+            }
+            if (mhoCount == 0) {
+                victory = true;
+                myPlayer = null;
             }
             for (int i = 0; i < 12; i++) {
                 for (int j = 0; j < 12; j++) {
