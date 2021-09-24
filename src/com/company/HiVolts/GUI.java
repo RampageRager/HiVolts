@@ -156,7 +156,7 @@ public class GUI extends JPanel implements ActionListener {
             h = sadImage.getHeight();
             BufferedImage sadAfter = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
             AffineTransform at2 = new AffineTransform();
-            at2.scale(0.07, 0.07);
+            at2.scale(0.27, 0.26);
             AffineTransformOp scaleOp2 = new AffineTransformOp(at2, AffineTransformOp.TYPE_BILINEAR);
             sadAfter = scaleOp2.filter(sadImage, sadAfter);
             sadImage = sadAfter;
@@ -166,7 +166,7 @@ public class GUI extends JPanel implements ActionListener {
             h = fenceImage.getHeight();
             BufferedImage fenceAfter = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
             AffineTransform at3 = new AffineTransform();
-            at3.scale(0.075, 0.075);
+            at3.scale(0.27, 0.26);
             AffineTransformOp scaleOp3 = new AffineTransformOp(at3, AffineTransformOp.TYPE_BILINEAR);
             fenceAfter = scaleOp3.filter(fenceImage, fenceAfter);
             fenceImage = fenceAfter;
