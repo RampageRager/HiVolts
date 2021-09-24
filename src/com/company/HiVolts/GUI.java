@@ -141,17 +141,17 @@ public class GUI extends JPanel implements ActionListener {
         updateTimer.start();
 
         try {
-            smileImage = ImageIO.read(new File("/Users/alekseyvalouev/IdeaProjects/HiVolts/src/com/company/HiVolts/smiley.png"));
+            smileImage = ImageIO.read(new File("src/com/company/images/smiley.png"));
             int w = smileImage.getWidth();
             int h = smileImage.getHeight();
             BufferedImage smileAfter = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
             AffineTransform at = new AffineTransform();
-            at.scale(0.17, 0.17);
+            at.scale(0.28, 0.26);
             AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
             smileAfter = scaleOp.filter(smileImage, smileAfter);
             smileImage = smileAfter;
 
-            sadImage = ImageIO.read(new File("/Users/alekseyvalouev/IdeaProjects/HiVolts/src/com/company/HiVolts/sad.png"));
+            sadImage = ImageIO.read(new File("src/com/company/images/sad.png"));
             w = sadImage.getWidth();
             h = sadImage.getHeight();
             BufferedImage sadAfter = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
@@ -161,7 +161,7 @@ public class GUI extends JPanel implements ActionListener {
             sadAfter = scaleOp2.filter(sadImage, sadAfter);
             sadImage = sadAfter;
 
-            fenceImage = ImageIO.read(new File("/Users/alekseyvalouev/IdeaProjects/HiVolts/src/com/company/HiVolts/fence.png"));
+            fenceImage = ImageIO.read(new File("src/com/company/images/fence.png"));
             w = fenceImage.getWidth();
             h = fenceImage.getHeight();
             BufferedImage fenceAfter = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
