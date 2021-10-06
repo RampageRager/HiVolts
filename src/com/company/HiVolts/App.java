@@ -3,6 +3,7 @@ package com.company.HiVolts;
 import javax.swing.*;
 
 public class App {
+    //this is a test
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Game");
